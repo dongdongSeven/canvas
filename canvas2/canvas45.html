@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas高级内容总结</title>
+</head>
+<body>
+  <canvas id="canvas"></canvas> 
+  <script>
+    // 1、阴影
+    // context.shadowColor="red";
+    // context.shadowOffsetX=10;
+    // context.shadowOffsetY=10;
+    // context.shadowBlur=10;
+    ///2、global
+    // context.global=1(default);
+    // context.globalCompositeOperation="source-over";(default)
+    // source-over   destination-over   lighter
+    // source-atop   destination-atop   copy
+    // source-in     destination-in     xor
+    // source-out    destination-out
+    ///3、剪辑区域
+    // context.clip()
+    ///4、非零环绕原则
+    // 制作镂空图形，其中绘制顺序一定要注意
+    ///5、isPointInPath
+    // context.isPointInPath(x,y) --true or false
+  </script>
+</body>
+</html>

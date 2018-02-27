@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>阴影</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+  // context.shadowColor    --阴影颜色
+  // context.shadowOffsetX  --阴影X偏移(可以为负数,即方向相反)
+  // context.shadowOffsetY  --阴影Y偏移(可以为负数,即方向相反)
+  // context.shadowBlur     --阴影模糊度
+    window.onload=function(){
+      var canvas=document.getElementById("canvas");
+      canvas.width=800;
+      canvas.height=800;
+      canvas.style.border="1px solid #eee";
+
+      var context=canvas.getContext("2d");
+
+      context.fillStyle="blue";
+      context.font="italic small-caps bold 40px arial";
+
+      context.textAlign="left";
+      context.textBaseline="center";
+
+      context.shadowColor="gray";
+      context.shadowOffsetX=20;
+      context.shadowOffsetY=-20;
+      context.shadowBlur=5;
+
+      context.fillText("Canvas My Love!",50,50);
+      context.fillRect(200,200,400,400);
+    }
+  </script>
+</body>
+</html>

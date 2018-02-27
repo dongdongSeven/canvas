@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>arcTo(),另一种弧线绘制方法</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload=function(){
+      var canvas=document.getElementById("canvas");
+
+      canvas.width=800;
+      canvas.height=800;
+      canvas.style.border='1px solid #eee';
+
+      var context=canvas.getContext("2d");
+      // arcTo(x1,y1,x2,y2,radius)绘制圆弧相切于，点(x0,y0)到(x1,y1),点(x1,y1到x2,y2),这两条线或是这两条线的延长线上,其中点(x0,y0)是前面绘制的末点。
+      arcToTest(context,150,100,650,100,600,600,300);
+    }
+
+    function arcToTest(cxt,x0,y0,x1,y1,x2,y2,R){
+      cxt.beginPath();
+      cxt.moveTo(x0,y0);
+      cxt.arcTo(x1,y1,x2,y2,R);
+
+      cxt.lineWidth=6;
+      cxt.strokeStyle="red";
+      cxt.stroke();
+
+      cxt.beginPath();
+      cxt.moveTo(x0,y0);
+      cxt.lineTo(x1,y1);
+      cxt.lineTo(x2,y2);
+
+      cxt.lineWidth=2;
+      cxt.strokeStyle="gray";
+      cxt.stroke();
+    }
+  </script>
+</body>
+</html>

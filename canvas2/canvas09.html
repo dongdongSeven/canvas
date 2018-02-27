@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>图像变换和状态保存</title>
+</head>
+<style>
+  canvas{
+    border:1px solid black;
+  }
+</style>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+  //图形变换：位移--translate、旋转--rotate、缩放--scale
+    window.onload=function(){
+      var canvas=document.getElementById("canvas");
+      canvas.width=800;
+      canvas.height=800;
+
+      var context=canvas.getContext("2d");
+
+      // context.translate(100,100);
+      // context.fillStyle="red";
+      // context.fillRect(0,0,400,400);
+      //发现与预想的离canvas左上角(300,300)不一样，而是(400,400),translate会叠加
+      // context.translate(300,300);
+      // context.fillStyle="green";
+      // context.fillRect(0,0,400,400);
+      
+      //这样写太麻烦
+      // context.translate(100,100);
+      // context.fillStyle="red";
+      // context.fillRect(0,0,400,400);
+      // context.translate(-100,-100);
+
+      // context.translate(300,300);
+      // context.fillStyle="green";
+      // context.fillRect(0,0,400,400);
+      // context.translate(-300,-300);
+
+      //canvas状态的保存和恢复
+      context.save();//保存
+      context.translate(100,100);
+      context.fillStyle="red";
+      context.fillRect(0,0,400,400);
+      context.restore();//恢复
+
+      context.save();//保存
+      context.translate(300,300);
+      context.fillStyle="green";
+      context.fillRect(0,0,400,400);
+      context.restore();//恢复
+    }
+  </script>
+</body>
+</html>

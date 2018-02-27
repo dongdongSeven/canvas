@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>cxt.rect(),cxt.fillRect(),cxt.strokeRect()矩形方法</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    var canvas=document.getElementById("canvas");
+    canvas.width=800;
+    canvas.height=800;
+    var context=canvas.getContext("2d");
+    window.onload=function(){
+      drawRect(context,100,100,400,400,10,'blue','red');
+      drawRect2(context,300,300,400,400,10,'blue','rgba(0,255,0,.3)')
+    }
+    //绘制矩形，context.rect(x,y,width,height)
+    function drawRect(cxt,x,y,width,height,borderWidth,borderColor,fillColor){
+      cxt.beginPath();
+      cxt.rect(x,y,width,height);
+      cxt.closePath();
+
+      cxt.lineWidth=borderWidth;
+      cxt.fillStyle=fillColor;
+      cxt.strokeStyle=borderColor;
+
+      cxt.fill();
+      cxt.stroke();
+    }
+    //绘制矩形，context.fillRect(x,y,width,height)--填充矩形
+    //context.strokeRect(x,y,width,height)--绘制矩形边框
+    function drawRect2(cxt,x,y,width,height,borderWidth,borderColor,fillColor){
+      cxt.lineWidth=borderWidth;
+      cxt.fillStyle=fillColor;
+      cxt.strokeStyle=borderColor;
+
+      cxt.fillRect(x,y,width,height);
+      cxt.strokeRect(x,y,width,height);
+    }
+    
+  </script>
+</body>
+</html>

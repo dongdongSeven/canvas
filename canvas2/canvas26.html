@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>bezierCurveTo(),三次贝塞尔曲线</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+  //bezierCurveTo
+  //context.moveTo(x0,y0)
+  //context.bezierCurveTo(x1,y1,x2,y2,x3,y3)
+  //(x0,y0)开始点，(x1,y1)与(x2,y2)控制点，(x3,y3)结束点
+    window.onload=function(){
+      var canvas=document.getElementById("canvas");
+        canvas.width=1200;
+        canvas.height=800;
+
+      var context=canvas.getContext("2d");
+
+      var skyStyle=context.createLinearGradient(0,800,0,0);
+        skyStyle.addColorStop(0.0,'#035');
+        skyStyle.addColorStop(1.0,'black');
+        context.fillStyle=skyStyle;
+        context.fillRect(0,0,canvas.width,canvas.height);
+      
+      for(var i=0;i<200;){
+        var r=Math.random()*2+1;
+        var x=Math.random()*canvas.width;
+        var y=Math.random()*canvas.height*0.65;//65%以上有星星，分割天地
+        var a=Math.random()*360;
+        if(x>r*2&&y>r*2&&(x+2*r)<canvas.width&&(y+2*r)<canvas.height){//星星不出边界
+          drawStar(context,x,y,r,a);//添加星星
+          i++;
+        }
+      }
+
+      fillMoon(context,2,900,200,100,30);//添加月亮
+      drawLand(context);//添加陆地
+    }
+
+    function drawLand(cxt){
+
+      cxt.save();
+
+      cxt.beginPath();
+      cxt.moveTo(0,600);
+      cxt.bezierCurveTo(540,400,660,800,1200,600);
+      cxt.lineTo(1200,800);
+      cxt.lineTo(0,800);
+      cxt.closePath();
+
+      var landStyle=cxt.createLinearGradient(0,800,0,0);
+      landStyle.addColorStop(0,"#030");
+      landStyle.addColorStop(1,"#580");
+      cxt.fillStyle=landStyle;
+
+      cxt.fill();
+
+      cxt.restore();
+    }
+
+    function drawStar(cxt,x,y,R,rot){
+
+      cxt.save();
+      //绘制在(x,y),大小为R,旋转rot度的五角星
+      //...
+      cxt.translate(x,y);
+      cxt.rotate(rot/180*Math.PI);
+      cxt.scale(R,R);
+
+      starPath(cxt,R);
+
+      cxt.fillStyle="#fb3";
+      // cxt.strokeStyle="#fd5";
+      // cxt.lineWidth=3;//由于scale会影响lineWidth，所以不用，相关属性strokeStyle、lineJoin也关闭
+      // cxt.lineJoin="round";
+      
+      cxt.fill();
+      // cxt.stroke();
+
+      cxt.restore();
+    }
+
+    function starPath(cxt,R){
+      cxt.beginPath();
+      for(var i=0;i<5;i++){
+        cxt.lineTo(Math.cos((18+i*72)/180*Math.PI)*R,-Math.sin((18+i*72)/180*Math.PI)*R);
+        cxt.lineTo(Math.cos((54+i*72)/180*Math.PI)*R/2,-Math.sin((54+i*72)/180*Math.PI)*R/2);
+      }
+      cxt.closePath();
+    }
+
+    function fillMoon(cxt,d,x,y,R,rot,/*optional*/fillColor){
+      cxt.save();
+      cxt.translate(x,y);
+      cxt.rotate(rot*Math.PI/180);
+      cxt.scale(R,R);
+      pathMoon(cxt,d);
+      cxt.fillStyle=fillColor||"yellow";
+      cxt.fill();
+      cxt.restore();
+    }
+
+    function pathMoon(cxt,d){
+      cxt.beginPath();
+      cxt.arc(0,0,1,0.5*Math.PI,1.5*Math.PI,true);
+      cxt.moveTo(0,-1);
+      cxt.arcTo(d,0,0,1,dis(0,-1,d,0)/d);
+      cxt.closePath();
+    }
+
+    function dis(x1,y1,x2,y2){
+      return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+    }
+  </script>
+</body>
+</html>

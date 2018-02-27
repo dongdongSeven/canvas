@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>线性渐变--fillStyle</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload=function(){
+      var cavnas=document.getElementById("canvas");
+      canvas.width=800;
+      canvas.height=800;
+
+      var context=canvas.getContext("2d");
+
+      //createLinearGradient(起始x，起始y，终点x，终点y)
+      var linearGrad=context.createLinearGradient(-200,-200,400,400);
+      //当渐变距离超出了的，一部分不会显示；当渐变距离不够的，剩余的会显示为最后一个addColorStop；
+      
+      linearGrad.addColorStop(0.0,'white');
+      linearGrad.addColorStop(0.25,'yellow');
+      linearGrad.addColorStop(0.5,'green');
+      linearGrad.addColorStop(0.75,'blue');
+      linearGrad.addColorStop(1.0,'black');
+      
+      context.fillStyle=linearGrad;
+      
+      context.fillRect(0,0,400,400);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>深入理解图形变换</title>
+</head>
+<body>
+  <canvas id="canvas">
+      当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    var canvas=document.getElementById("canvas");
+    canvas.width=1200;
+    canvas.height=800;
+    canvas.style.border="1px solid #eee";
+    var context=canvas.getContext("2d");
+
+    context.fillStyle='red';
+    context.strokeStyle='#058';
+    context.lineWidth=5;
+    /////////////////////////单位矩阵
+    // a c e
+    // b d f
+    // 0 0 1
+    /////////////////////////
+    // a,d 水平、垂直缩放 默认a=1,d=1
+    // b,c 水平、垂直倾斜
+    // e,f 水平、垂直位移
+    /////////////////////////
+    //transform(a,b,c,d,e,f)
+    
+    context.save();
+    context.transform(1,0,0,1,50,100);//位移(50,100)
+    context.transform(2,0,0,1.5,0,0);//缩放(2,1.5)--和scale(xs,ys)的副作用一样，会使变宽、位移缩放
+    context.transform(1,0.2,0.2,1,0,0);//倾斜(0.2,0.2)
+    //可以看出transform的效果是叠加的，也就是级联效果，若不要级联效果，使用setTransform重置
+    context.setTransform(1,0,0,1,0,0);
+    context.fillRect(0,0,200,200);
+    context.strokeRect(0,0,200,200);
+    context.restore();
+  </script>
+</body>
+</html>

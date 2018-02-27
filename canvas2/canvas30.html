@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>文本对齐</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload=function(){
+      var canvas=document.getElementById("canvas");
+      canvas.width=800;
+      canvas.height=800;
+      canvas.style.border="1px solid #eee";
+
+      var context=canvas.getContext("2d");
+
+      context.fillStyle="deeppink";
+      context.font="italic small-caps bold 160px arial";
+      context.textAlign="center";
+      context.textBaseline="middle";
+
+      context.fillText("CANVAS",400,400);
+      drawBaseLine(context);
+    }
+
+    function drawBaseLine(cxt){
+      cxt.save();
+      cxt.strokeStyle="orange";
+      cxt.moveTo(0,400);
+      cxt.lineTo(800,400);
+      cxt.moveTo(400,0);
+      cxt.lineTo(400,800);
+      cxt.stroke();
+      cxt.restore();
+    }
+  </script>
+</body>
+</html>

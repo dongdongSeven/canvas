@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>arc(),圆弧和圆角矩形</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+  // context.arc(centerx,centery,radius,startingAngle,endingAngle,anticlockwise=flase)最后一个参数可选，默认是顺时针--false
+  //      1.5π
+  // 1π   圆心   0π/2π
+  //      0.5π
+  // 注意：起点是右边；不管是顺时针还是逆时针都是按上图计算π的。
+    window.onload=function(){
+      var canvas=document.getElementById("canvas");
+      canvas.width=1000;
+      canvas.height=800;
+      canvas.style.border='1px solid #eee';
+      var context=canvas.getContext("2d");
+
+      context.lineWidth=5;
+      context.fillStyle="#058";
+      context.strokeStyle='#005588';
+      for(var i=0;i<10;i++){
+        context.beginPath();
+        context.arc(50+i*100,60,40,0,2*Math.PI*(i+1)/10);
+        context.stroke();
+      };
+      for(var i=0;i<10;i++){
+        context.beginPath();
+        context.arc(50+i*100,180,40,0,2*Math.PI*(i+1)/10);
+        context.closePath();
+        context.stroke();
+      };
+      for(var i=0;i<10;i++){
+        context.beginPath();
+        context.arc(50+i*100,300,40,0,2*Math.PI*(i+1)/10,true);
+        context.closePath()
+        context.stroke();
+      };
+      for(var i=0;i<10;i++){
+        context.beginPath();
+        context.arc(50+i*100,420,40,0,2*Math.PI*(i+1)/10,true);
+        context.stroke();
+      };
+      for(var i=0;i<10;i++){
+        context.beginPath();
+        context.arc(50+i*100,540,40,0,2*Math.PI*(i+1)/10);
+        context.closePath();
+        context.fill();
+      };
+      for(var i=0;i<10;i++){
+        context.beginPath();
+        context.arc(50+i*100,660,40,0,2*Math.PI*(i+1)/10,true);
+        context.fill();
+      }
+    }
+  </script>
+</body>
+</html>

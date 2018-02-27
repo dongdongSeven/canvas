@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas基础 使用drawImage绘图</title>
+</head>
+<style>
+  #canvas{
+    display: block;
+    margin:0 auto;
+  }
+  body{
+    background-color: black;
+  }
+  #scale-range{
+    display: block;
+    margin:20px auto;
+    width: 60%;
+  }
+</style>
+<body>
+  <canvas id="canvas">
+    浏览器不支持，换个浏览器试试
+  </canvas>
+  <input id="scale-range" min="0.5" max="3.0" value="1.0" step="0.01" type="range"/>
+  <!-- 离屏canvas：将第二个canvas中的内容加载到第一个canvas上 -->
+  <canvas id="watermark-canvas">
+    浏览器不支持，换个浏览器试试
+  </canvas>
+  <script>
+  // drawImage(image/canvas,dx,dy)
+  // drawImage(image/canvas,dx,dy,dw,dh)
+  // drawImage(image/canvas,sx,sy,sw,sh,dx,dy,dw,dh)
+  // 其中sx,sy,sw,sh的s表示source;
+  // sx--原图上的x点、sy--原图上的y点、sw--原图上截取宽度w、sh--原图上截取高度h
+  // dx,dy,dw,dh的d表示destination;
+  // sx--canvas画布上的x点、sy--canvas画布上的y点、sw--canvas画布上截取宽度w、sh--canvas画布上截取高度h
+    var canvas=document.getElementById("canvas");
+    var slider=document.getElementById("scale-range");
+    var context=canvas.getContext("2d");
+    var image=new Image();
+
+    var watermarkCanvas=document.getElementById("watermark-canvas");
+    var watermarkContext=watermarkCanvas.getContext("2d");
+
+    window.onload=function(){
+
+      canvas.width=1920;
+      canvas.height=790;
+      canvas.style.border="1px solid black";
+
+      var scale=slider.value;
+
+      image.src="img.jpg";
+      image.onload=function(){//必须等图片加载完成才能drawImage,当图片超出时,canvas会自动裁掉多余的部分
+        // context.drawImage(this,500,0,800,800,0,5,canvas.width,canvas.height);
+        drawImageByScale(scale);
+
+        slider.onmousemove=function(){//当使用onchang时，不能实时变化；但使用onmousemove对性能消耗高
+          scale=slider.value;
+          drawImageByScale(scale);
+        }
+      }
+      //setup watermark canvas
+      watermarkCanvas.width=400;
+      watermarkCanvas.height=100;
+      watermarkCanvas.style.display="none";//把本身隐藏了，只是用于canvas的drawImage(watermarkCanvas,dx,dy);
+
+      watermarkContext.font="italic small-caps bold 50px arial";
+      watermarkContext.textAlign="right";
+      watermarkContext.textBaseline="middle";
+      watermarkContext.fillStyle="rgba(250,84,84,0.7)";
+      watermarkContext.fillText("== 冬冬七号 ==",watermarkCanvas.width,watermarkCanvas.height/2);
+
+      
+    }
+
+    function drawImageByScale(scale){
+      var imageWidth=1920*scale;
+      var imageHeight=790*scale;
+
+      var dx=canvas.width/2-imageWidth/2;
+      var dy=canvas.height/2-imageHeight/2;
+
+      context.clearRect(0,0,canvas.width,canvas.height);
+
+      context.drawImage(image,dx,dy,imageWidth,imageHeight);
+      context.drawImage(watermarkCanvas,canvas.width-watermarkCanvas.width,canvas.height-watermarkCanvas.height);
+    }
+  </script>
+</body>
+</html>

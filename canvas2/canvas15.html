@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>径向渐变--fillStyle</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload=function(){
+      var cavnas=document.getElementById("canvas");
+      canvas.width=800;
+      canvas.height=800;
+      var context=canvas.getContext("2d");
+
+      // createLinearGradient(圆心1x，圆心1y，圆1半径，圆心2x，圆心2y，圆2半径)
+      var radialGrad=context.createRadialGradient(400,400,100,400,400,500);
+      //当渐变距离超出了的，一部分不会显示；当渐变距离不够的，画布剩余的会显示为最后一个addColorStop；
+      
+      radialGrad.addColorStop(0.0,'white');
+      radialGrad.addColorStop(0.25,'yellow');
+      radialGrad.addColorStop(0.5,'green');
+      radialGrad.addColorStop(0.75,'blue');
+      radialGrad.addColorStop(1.0,'black');
+
+      context.fillStyle=radialGrad;
+
+      context.fillRect(0,0,800,800);
+    }
+  </script>
+</body>
+</html>

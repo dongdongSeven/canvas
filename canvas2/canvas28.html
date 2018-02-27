@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>字型、字号、字体</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+  // font:font-style font-variant font-weight font-sise font-family;
+  // 默认值是:font:"20 sans-serif"
+  // font-style:normal,italic(倾斜字),oblique(倾斜字体)
+  // font-variant:normal,small-caps(小一号的大写字母)
+  // font-weight:lighter,normal,bold,bloder
+  // font-size:10px,2rem,150%
+  // font-family:sans-serif,arial,verdana
+    window.onload=function(){
+      var canvas=document.getElementById("canvas");
+      canvas.width=800;
+      canvas.height=800;
+      canvas.style.border="1px solid #eee";
+
+      var context=canvas.getContext("2d");
+
+      context.font="20px sans-serif";
+      context.fillText("欢迎大家学习《Canvas绘图接口详解》！",30,20);
+
+      context.font="italic 20px sans-serif";
+      context.fillText("欢迎大家学习《Canvas绘图接口详解》！",30,70);
+
+      context.font="oblique 20px sans-serif";
+      context.fillText("欢迎大家学习《Canvas绘图接口详解》！",30,120);
+
+      context.font="small-caps 20px sans-serif";
+      context.fillText("欢迎大家学习《Canvas绘图接口详解》！",30,170);
+
+      context.font="bold 20px sans-serif";
+      context.fillText("欢迎大家学习《Canvas绘图接口详解》！",30,220);
+
+      context.font="40px sans-serif";
+      context.fillText("欢迎大家学习《Canvas绘图接口详解》！",30,270);
+
+      context.font="20px arial";
+      context.fillText("欢迎大家学习《Canvas绘图接口详解》！",30,320);
+    }
+  </script>
+</body>
+</html>

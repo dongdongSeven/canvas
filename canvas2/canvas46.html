@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>在canvas中使用其他HTML元素</title>
+</head>
+<style>
+  #canvas-wrapper{
+    width: 1200px;
+    height: 800px;
+    position: relative;
+    margin:50px auto;
+  }
+  #canvas{
+    border:1px solid #aaa;
+  }
+  #controller{
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    background-color: rgba(0,85,116,.7);
+    padding: 5px 20px 25px 20px;
+    border-radius: 10px 10px;
+  }
+  #controller h1{
+    color: white;
+    font-weight: bold;
+    font-family: Mircosoft Yahei;
+  }
+  #canvas-btn{
+    display: inline-block;
+    background-color: #8b0;
+    color: white;
+    font-size: 14px;
+    padding:5px 15px;
+    border-radius: 6px 6px;
+    text-decoration: none;
+    margin-top: 10px;
+    margin-right: 20px;
+  }
+  #canvas-btn:hover{
+    text-decoration: none;
+    background-color: #7a0;
+  }
+  #controller .color-btn{
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 6px 6px;
+    font-size: 14px;
+    margin-top: 10px;
+    margin-right: 5px;
+    text-decoration: none;
+  }
+  #controller .color-btn:hover{
+    text-decoration: none;
+  }
+  #white-color-btn{
+    background-color: white;
+  }
+  #black-color-btn{
+    background-color: black;
+  }
+</style>
+<body>
+  <div id="canvas-wrapper">
+    <canvas id="canvas">
+      当前浏览器不支持Canvas，请更换浏览器再试
+    </canvas>
+    <div id="controller">
+      <h1>Canvas绘图之旅</h1>
+      <a href="#" id="canvas-btn">停止运动</a>
+      <a href="#" id="white-color-btn" class="color-btn">&nbsp;</a>
+      <a href="#" id="black-color-btn" class="color-btn">&nbsp;</a>
+    </div>
+  </div>
+  <script>
+    // Canvas默认的背景颜色是白色
+    var balls=[];
+    var themeColor="white";
+    var isMoving=true;
+    var timer=null;
+    var globalCompositeOperation=["source-over","source-atop","source-in","source-out","destination-over","destination-atop","destination-in","destination-out","lighter","copy","xor"];
+
+    window.onload=function(){
+      var canvas=document.getElementById("canvas");
+
+      canvas.width=1200;
+      canvas.height=800;
+
+      var context=canvas.getContext("2d");
+
+      for(var i=0;i<100;i++){
+        var R=Math.floor(Math.random()*255);
+        var G=Math.floor(Math.random()*255);
+        var B=Math.floor(Math.random()*255);
+        var x=Math.random()*canvas.width;
+        var y=Math.random()*canvas.height;
+        var r=Math.random()*50+20;
+        var vx=(Math.random()*5+5)*Math.pow(-1,Math.floor(Math.random()*100));//此方法让小球出场就无规律运动
+        var vy=(Math.random()*5+5)*Math.pow(-1,Math.floor(Math.random()*100));
+        var aBall={
+          x:x,
+          y:y,
+          r:r,
+          vx:vx,
+          vy:vy,
+          rgb:"rgb("+R+","+G+","+B+")"
+        }
+        balls[i]=aBall;
+      }
+
+      document.getElementById("canvas-btn").onclick=function(){
+        if(isMoving){
+          isMoving=false;
+          this.text="开始运动";
+        }else{
+          isMoving=true;
+          this.text="停止运动";
+        }
+        return false;
+      }
+
+      document.getElementById("white-color-btn").onclick=function(){
+        themeColor="white";
+        return false;
+      }
+
+      document.getElementById("black-color-btn").onclick=function(){
+        themeColor="black";
+        return false;
+      }
+
+      setInterval(function(){
+        draw(context);
+        if(isMoving){
+          update(canvas.width,canvas.height);
+        }
+      },50);
+    }
+
+    function draw(cxt){
+      var canvas=cxt.canvas;
+      cxt.clearRect(0,0,canvas.width,canvas.height);
+      
+      if(themeColor=="black"){
+        cxt.fillStyle="black";
+        cxt.fillRect(0,0,canvas.width,canvas.height);
+      }
+
+      for(var i=0;i<balls.length;i++){
+        cxt.beginPath();
+        cxt.globalCompositeOperation=themeColor==="white"?"lighter":"xor";
+        cxt.arc(balls[i].x,balls[i].y,balls[i].r,0,Math.PI*2);
+        cxt.fillStyle=balls[i].rgb;
+        cxt.fill();
+      }
+    }
+
+    function update(canvasWidth,canvasHeight){
+      for(var i=0;i<balls.length;i++){
+        balls[i].x+=balls[i].vx;
+        balls[i].y+=balls[i].vy;
+
+        if(balls[i].x<=balls[i].r){
+          balls[i].vx=-balls[i].vx;
+          balls[i].x=balls[i].r;
+        }
+        if(balls[i].x+balls[i].r>=canvasWidth){
+          balls[i].vx=-balls[i].vx;
+          balls[i].x=canvasWidth-balls[i].r;
+        }
+        if(balls[i].y<=balls[i].r){
+          balls[i].vy=-balls[i].vy;
+          balls[i].y=balls[i].r;
+        }
+        if(balls[i].y+balls[i].r>=canvasHeight){
+          balls[i].vy=-balls[i].vy;
+          balls[i].y=canvasHeight-balls[i].r;
+        }
+      }
+    }
+  </script>
+</body>
+</html>

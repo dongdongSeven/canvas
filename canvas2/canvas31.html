@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>文本的度量</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+  // context.measureText(string).width目前只能测试字段的长度，
+  // 且要放在context.font设置好了后才能准确测试
+    window.onload=function(){
+      var canvas=document.getElementById("canvas");
+      canvas.width=800;
+      canvas.height=800;
+      canvas.style.border="1px solid #eee";
+
+      var context=canvas.getContext("2d");
+
+      context.font="bold 40px arial";
+      context.fillStyle="deeppink";
+      context.textAlign="center";
+      context.textBaseline="middle";
+
+      context.fillText("欢迎大家学习《Canvas绘图接口详解》！",400,400);
+
+      var measureWidth=context.measureText("欢迎大家学习《Canvas绘图接口详解》！").width;
+      context.fillText("measureWidth值是"+measureWidth+"px",400,600);
+    }
+    // 文字渲染基础
+    // context.font="bold 40px Arial";
+    // context.fillText(string,x,y,[maxlen]);
+    // context.strokeText(string,x,y,[maxlen]);
+    // font默认值:"20px sans-serif"
+    // context.font=font-style font-variant font-weight font-size font-family
+    // 文本对齐
+    // context.textAlign=left/center/right;
+    // context.textBaseline=top/middle/bottom/alphabetic(default)/ideographic/hanging
+    // context.measureText(string).width;
+  </script>
+</body>
+</html>

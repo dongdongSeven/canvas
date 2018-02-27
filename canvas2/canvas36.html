@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>globalAlpha和globalCompositeOperation</title>
+</head>
+<style>
+  a{
+    margin-right: 25px;
+  }
+</style>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas>
+  <div id="test">
+    <a href="#">source-over</a>
+    <a href="#">source-atop</a>
+    <a href="#">source-in</a>
+    <a href="#">source-out</a>
+    <a href="#">destination-over</a>
+    <a href="#">destination-atop</a>
+    <a href="#">destination-in</a>
+    <a href="#">destination-out</a>
+    <a href="#">lighter</a>
+    <a href="#">copy</a>
+    <a href="#">xor</a>
+  </div>
+  <script>
+  // context.globalAlpha=1(default)  --全局透明
+  // context.globalCompositeOperation="source-over";(default)
+  // source-over(default)   destination-over     lighter
+  // source-atop            destination-atop     copy
+  // source-in              destination-in       xor
+  // source-out             destination-out
+  // source:表示结果，也就是后画的覆盖在上面
+  // destination:表示目的地，也就是先画的覆盖在上面
+  // lighter:重叠部分颜色重新计算
+  // copy:把最后一个图形copy到画布上
+  // xor:异或操作，真真得假，假假得真
+    window.onload=function(){
+      draw("source-over");
+      var a=document.getElementsByTagName("a");
+      Array.prototype.slice.call(a).forEach(function(item){
+        item.onclick=function(){
+          draw(this.text);
+        }
+      });
+    }
+
+    function draw(compositeStyle){
+      var canvas=document.getElementById("canvas");
+      
+      canvas.width=1200;
+      canvas.height=800;
+      canvas.style.border="1px solid #eee";
+
+      var context=canvas.getContext("2d");
+
+      context.clearRect(0,0,canvas.width,canvas.height);//清理画布
+
+      // draw a title
+      context.font="italic bold 40px arial";
+      context.textAlign="center";
+      context.textBaseline="middle";
+      context.fillStyle="gold";
+      context.fillText("globalCompositeOperation is "+compositeStyle,canvas.width/2,60);
+
+      // draw a rect
+      context.fillStyle="blue";
+      context.fillRect(300,150,500,500);
+
+      // draw a triangle
+      context.globalCompositeOperation=compositeStyle;
+      context.fillStyle="red";
+      context.beginPath();
+      context.moveTo(700,250);
+      context.lineTo(1000,750);
+      context.lineTo(400,750);
+      context.closePath();
+      context.fill();
+    }
+  </script>
+</body>
+</html>

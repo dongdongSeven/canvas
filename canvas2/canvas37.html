@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>globalAlpha和globalCompositeOperation</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+  // context.globalAlpha=1(default)  --全局透明
+  // context.globalCompositeOperation="source-over";(default)
+  // source-over(default)   destination-over     lighter
+  // source-atop            destination-atop     copy
+  // source-in              destination-in       xor
+  // source-out             destination-out
+  // source:表示结果，也就是后画的覆盖在上面
+  // destination:表示目的地，也就是先画的覆盖在上面
+  // lighter:重叠部分颜色重新计算
+  // copy:把最后一个图形copy到画布上
+  // xor:异或操作，真真得假，假假得真
+  var balls=[];
+    window.onload=function(){
+      var canvas=document.getElementById("canvas");
+      canvas.width=1200;
+      canvas.height=800;
+      canvas.style.border="1px solid #eee";
+
+      var context=canvas.getContext("2d");
+
+      for(var i=0;i<100;i++){
+        var R=Math.floor(Math.random()*255);
+        var G=Math.floor(Math.random()*255);
+        var B=Math.floor(Math.random()*255);
+        var r=Math.random()*50+20;
+        aBall={
+          color:"rgb("+R+","+G+","+B+")",
+          r:r,
+          x:Math.random()*(canvas.width-2*r)+r,
+          y:Math.random()*(canvas.height-2*r)+r,
+          vx:(Math.random()*5+5)*Math.pow(-1,Math.floor(Math.random()*100)),
+          vy:(Math.random()*5+5)*Math.pow(-1,Math.floor(Math.random()*100)),
+        }
+        balls[i]=aBall;
+      }
+
+      setInterval(function(){
+        draw(context);
+        update(canvas.width,canvas.height);
+      },50);
+    }
+
+    function draw(cxt){
+      var canvas=cxt.canvas;//获取canvas方法3
+      cxt.clearRect(0,0,canvas.width,canvas.height);
+
+      for(var i=0;i<balls.length;i++){
+        cxt.globalCompositeOperation="xor";
+        cxt.fillStyle=balls[i].color;
+        cxt.beginPath();
+        cxt.arc(balls[i].x,balls[i].y,balls[i].r,0,2*Math.PI);
+        cxt.closePath();
+        cxt.fill();
+      }
+    }
+
+    function update(canvasWidth,canvasHeight){
+      for(var i=0;i<balls.length;i++){
+        balls[i].x+=balls[i].vx;
+        balls[i].y+=balls[i].vy;
+
+        if(balls[i].x-balls[i].r<=0){
+          balls[i].vx=-balls[i].vx;
+          balls[i].x=balls[i].r;
+        }
+
+        if(balls[i].x+balls[i].r>=canvasWidth){
+          balls[i].vx=-balls[i].vx;
+          balls[i].x=canvasWidth-balls[i].r;
+        }
+
+        if(balls[i].y-balls[i].r<=0){
+          balls[i].vy=-balls[i].vy;
+          balls[i].y=balls[i].r;
+        }
+
+        if(balls[i].y+balls[i].r>=canvasHeight){
+          balls[i].vy=-balls[i].vy;
+          balls[i].y=canvasHeight-balls[i].r;
+        }
+      }
+    }
+  </script>
+</body>
+</html>

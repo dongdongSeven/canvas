@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>save与restore在画五角星中的实战</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload=function(){
+      var canvas=document.getElementById("canvas");
+        canvas.width=800;
+        canvas.height=800;
+
+      var context=canvas.getContext("2d");
+
+      context.fillStyle='black';
+      context.fillRect(0,0,canvas.width,canvas.height);
+      
+      for(var i=0;i<200;){
+        var r=Math.random()*5+5;
+        var x=Math.random()*canvas.width;
+        var y=Math.random()*canvas.height;
+        var a=Math.random()*360;
+        if(x>r*2&&y>r*2&&(x+2*r)<canvas.width&&(y+2*r)<canvas.height){//星星不出边界
+          drawStar(context,x,y,r,a);
+          i++;
+        }
+      }
+    }
+
+    function drawStar(cxt,x,y,R,rot){
+
+      cxt.save();
+      //绘制在(x,y),大小为R,旋转rot度的五角星
+      //...
+      cxt.translate(x,y);
+      cxt.rotate(rot/180*Math.PI);
+      cxt.scale(R,R);
+
+      starPath(cxt,R);
+
+      cxt.fillStyle="#fb3";
+      // cxt.strokeStyle="#fd5";
+      // cxt.lineWidth=3;//由于scale会影响lineWidth，所以不用，相关属性strokeStyle、lineJoin也关闭
+      // cxt.lineJoin="round";
+      
+      cxt.fill();
+      cxt.stroke();
+
+      cxt.restore();
+    }
+
+    function starPath(cxt,R){
+      cxt.beginPath();
+      for(var i=0;i<5;i++){
+        cxt.lineTo(Math.cos((18+i*72)/180*Math.PI)*R,-Math.sin((18+i*72)/180*Math.PI)*R);
+        cxt.lineTo(Math.cos((54+i*72)/180*Math.PI)*R/2,-Math.sin((54+i*72)/180*Math.PI)*R/2);
+      }
+      cxt.closePath();
+    }
+  </script>
+</body>
+</html>

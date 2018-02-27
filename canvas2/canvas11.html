@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>scale存在的问题</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+  //不仅大小缩放了，坐标、边框宽度也相应的缩放了
+    var canvas=document.getElementById("canvas");
+    canvas.width=800;
+    canvas.height=800;
+    canvas.style.border="1px solid #eee";
+
+    var context=canvas.getContext("2d");
+    
+    context.lineWidth=5;
+
+    context.save();
+    context.scale(1,1);
+    context.strokeRect(50,50,200,200);
+    context.restore();
+
+    context.save();
+    context.scale(2,2);
+    context.strokeRect(50,50,200,200);
+    context.restore();
+
+    context.save();
+    context.scale(3,3);
+    context.strokeRect(50,50,200,200);
+    context.restore();
+
+  </script>
+</body>
+</html>

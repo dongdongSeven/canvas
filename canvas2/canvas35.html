@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>globalAlpha和globalCompositeOperation</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+  // context.globalAlpha=1(default)  --全局透明
+  // context.globalCompositeOperation="source-over";(default)
+  // source-over(default)   destination-over     lighter
+  // source-atop            destination-atop     copy
+  // source-in              destination-in       xor
+  // source-out             destination-out
+  // source:表示结果，也就是后画的覆盖在上面
+  // destination:表示目的地，也就是先画的覆盖在上面
+  // lighter:重叠部分颜色重新计算
+  // copy:把最后一个图形copy到画布上
+  // xor:异或操作，真真得假，假假得真
+    window.onload=function(){
+      var canvas=document.getElementById("canvas");
+      canvas.width=1200;
+      canvas.height=800;
+      canvas.style.border="1px solid #eee";
+
+      var context=canvas.getContext("2d");
+
+      context.globalAlpha=.7;//全局透明
+
+      for(var i=0;i<100;i++){
+        var R=Math.floor(Math.random()*255);
+        var G=Math.floor(Math.random()*255);
+        var B=Math.floor(Math.random()*255);
+        var x=Math.random()*canvas.width;
+        var y=Math.random()*canvas.height;
+        var r=Math.random()*100;
+
+        context.fillStyle="rgb("+R+","+G+","+B+")";
+        context.beginPath();//必须加，否则颜色会被后面的覆盖
+        context.arc(x,y,r,0,2*Math.PI);
+        context.fill();
+      }
+
+    }
+  </script>
+</body>
+</html>

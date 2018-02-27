@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>lineJoin相交,miter(default尖角),bevel(斜接),round(圆角)</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload=function(){
+      //重点，在canvas里x,y坐标系中，x轴是向右的，y轴是向下的
+      var canvas=document.getElementById("canvas");
+        canvas.width=800;
+        canvas.height=800;
+
+      var context=canvas.getContext("2d");
+
+      context.lineWidth=10;
+      context.lineJoin="miter";//尖角
+      context.miterLimit=10;//只有miter这个默认属性才有这属性，它指原来线条相交中间点与延伸出去的距离是10px，也就是默认值
+      // context.lineJoin="bevel";//斜接
+      // context.lineJoin="round";//圆角
+      drawStar(context,20,300,400,400,0);
+    }
+
+    function drawStar(cxt,r,R,x,y,rot){//cxt上下文，r小圆半径，R大圆半径，x轴偏移，y轴偏移，rot旋转
+      cxt.beginPath();
+      for(var i=0;i<5;i++){//Math.sin()/Math.cos()只支持弧度计算，将角度乘以2Math.PI/360转化成角度
+        cxt.lineTo(Math.cos((18+i*72-rot)/180*Math.PI)*R+x,-Math.sin((18+i*72-rot)/180*Math.PI)*R+y);
+        cxt.lineTo(Math.cos((54+i*72-rot)/180*Math.PI)*r+x,-Math.sin((54+i*72-rot)/180*Math.PI)*r+y);
+      }
+      cxt.closePath();
+      cxt.stroke();
+    }
+  </script>
+</body>
+</html>

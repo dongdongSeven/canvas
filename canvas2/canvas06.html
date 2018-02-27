@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>画五角星</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+  window.onload=function(){
+    //重点，在canvas里x,y坐标系中，x轴是向右的，y轴是向下的
+    var canvas=document.getElementById("canvas");
+      canvas.width=800;
+      canvas.height=800;
+
+    var context=canvas.getContext("2d");
+
+    context.lineWidth=10;
+    drawStar(context,150,300,400,400,20);
+  }
+
+  function drawStar(cxt,r,R,x,y,rot){//cxt上下文，r小圆半径，R大圆半径，x轴偏移，y轴偏移，rot旋转
+    cxt.beginPath();
+    for(var i=0;i<5;i++){//Math.sin()/Math.cos()只支持弧度计算，将角度乘以2Math.PI/360转化成角度
+      cxt.lineTo(Math.cos((18+i*72-rot)/180*Math.PI)*R+x,-Math.sin((18+i*72-rot)/180*Math.PI)*R+y);
+      cxt.lineTo(Math.cos((54+i*72-rot)/180*Math.PI)*r+x,-Math.sin((54+i*72-rot)/180*Math.PI)*r+y);
+    }
+    cxt.closePath();
+    cxt.stroke();
+  }
+  </script>
+</body>
+</html>

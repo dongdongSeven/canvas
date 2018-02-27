@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>画圆角矩形-2</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload=function(){
+      var canvas=document.getElementById("canvas");
+
+      canvas.width=800;
+      canvas.height=800;
+      canvas.style.border='1px solid #eee';
+
+      var context=canvas.getContext("2d");
+
+      fillRoundRect(context,150,150,500,500,10,"#bbada0");
+      for(var i=0;i<4;i++)
+        for(var j=0;j<4;j++)
+          fillRoundRect(context,170+i*120,170+j*120,100,100,6,"#ccc0b3");
+    };
+
+    function fillRoundRect(cxt,x,y,width,height,raduis,/*optional*/fillColor){
+
+      if(2*raduis>width||2*raduis>height) return;
+
+      cxt.save();
+      cxt.translate(x,y);
+      pathRoundRect(cxt,width,height,raduis);
+      cxt.fillStyle=fillColor||'blue';
+      cxt.fill();
+      cxt.restore();
+    };
+
+    function strokeRoundRect(cxt,x,y,width,height,raduis,/*optional*/lineWidth,/*optional*/strokeColor){
+      if(2*raduis>width||2*raduis>height) return;
+
+      cxt.save();
+      cxt.translate(x,y);
+      pathRoundRect(cxt,width,height,raduis);
+      cxt.lineWidth=lineWidth||1;
+      cxt.strokeStyle=strokeColor||'black';
+      cxt.stroke();
+      cxt.restore();
+    }
+
+    function pathRoundRect(cxt,width,height,raduis){
+      cxt.beginPath();
+      cxt.arc(width-raduis,height-raduis,raduis,0,Math.PI/2);
+      cxt.lineTo(raduis,height);
+      cxt.arc(raduis,height-raduis,raduis,Math.PI/2,Math.PI);
+      cxt.lineTo(0,raduis);
+      cxt.arc(raduis,raduis,raduis,Math.PI,Math.PI/2*3);
+      cxt.lineTo(width-raduis,0);
+      cxt.arc(width-raduis,raduis,raduis,Math.PI/2*3,Math.PI*2);
+      cxt.closePath();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>quadraticCurveTo(),二次贝塞尔曲线--Bezier</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+  //arcTo
+  //context.moveTo(x0,y0);                  (x0,y0)开始点，垂足不一定是这个点；
+  //context.arcTo(x1,y1,x2,y2,radius);      (x1,y1)控制点；
+  //                                        (x2,y2)结束点，垂足也不一定是这个点；
+  ///////////////////                                     
+  //quadraticCurveTo
+  //context.moveTo(x0,y0);                  (x0,y0)开始点，起始点就是这个点；
+  //context.quadraticCurveTo(x1,y1,x2,y2);  (x1,y1)控制点；
+  //                                        (x2,y2)结束点，结束点就是这个点；
+  //http://tinyurl.com/html5quadratic       实验体验网站                                
+    window.onload=function(){
+      var canvas=document.getElementById("canvas");
+
+      canvas.width=800;
+      canvas.height=800;
+      canvas.style.border='1px solid #eee';
+
+      var context=canvas.getContext("2d");
+
+      fillMoon(context,2,400,400,300,0);
+    }
+
+    function fillMoon(cxt,d,x,y,R,rot,/*optional*/fillColor){
+      cxt.save();
+      cxt.translate(x,y);
+      cxt.rotate(rot*Math.PI/180);
+      cxt.scale(R,R);
+      pathMoon(cxt,d);
+      cxt.fillStyle=fillColor||"yellow";
+      cxt.fill();
+      cxt.restore();
+    }
+
+    function pathMoon(cxt,d){
+      cxt.beginPath();
+      cxt.arc(0,0,1,0.5*Math.PI,1.5*Math.PI,true);
+      cxt.moveTo(0,-1);//个人认为可以不用，因为画完圆弧的结束点就是(0,-1)
+      cxt.quadraticCurveTo(1.5,0,0,1);
+      cxt.closePath();
+    }
+  </script>
+</body>
+</html>

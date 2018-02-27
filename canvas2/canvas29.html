@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>文本对齐</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+  // context.textAlign=left/center/right;
+  // context.textBaseline=top/middle/bottom/alphabetic(default)/ideographic/hanging
+  // alphabetic---阿拉伯语;ideographic---方块字语言,如中文日文;hanging---印度语
+    window.onload=function(){
+      var canvas=document.getElementById("canvas");
+      canvas.width=800;
+      canvas.height=800;
+      canvas.style.border="1px solid #eee";
+
+      var context=canvas.getContext("2d");
+      // textAlign属性对比
+      context.fillStyle="red";
+      context.font="italic small-caps bold 25px arial";
+
+      context.textAlign="left";
+      context.fillText("textAlign=left",400,20);
+      
+      context.textAlign="center";
+      context.fillText("textAlign=center",400,50);
+      
+      context.textAlign="right";
+      context.fillText("textAlign=right",400,80);
+
+      drawCenterLine(context);
+      // textBaseline属性对比
+      context.textBaseline="top";
+      context.fillText("textBaseLine=top",400,140);
+      drawBaseLine(context,140);
+
+      context.textBaseline="middle";
+      context.fillText("textBaseLine=middle",400,240);
+      drawBaseLine(context,240);
+
+      context.textBaseline="bottom";
+      context.fillText("textBaseLine=bottom",400,340);
+      drawBaseLine(context,340);
+
+      context.textBaseline="alphabetic";
+      context.fillText("欢迎大家学习《Canvas绘图接口详解》！",400,500);
+      drawBaseLine(context,500);
+
+      context.textBaseline="ideographic";
+      context.fillText("欢迎大家学习《Canvas绘图接口详解》！",400,600);
+      drawBaseLine(context,600);
+
+      context.textBaseline="hanging";
+      context.fillText("欢迎大家学习《Canvas绘图接口详解》！",400,700);
+      drawBaseLine(context,700);
+    }
+
+    function drawCenterLine(cxt){
+      cxt.strokeStyle="black";
+
+      cxt.moveTo(400,0);
+      cxt.lineTo(400,800);
+      cxt.stroke();
+    }
+
+    function drawBaseLine(cxt,y){
+      var width=cxt.canvas.width;
+
+      cxt.save()
+      cxt.strokeStyle="green";
+      cxt.lineWidth=2;
+
+      cxt.moveTo(0,y)
+      cxt.lineTo(width,y);
+      cxt.stroke();
+      cxt.restore();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>文字渲染基础</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+  // context.font="..."与CSS是一样的
+  // context.fillText("context",x,y,width);
+  // context.strokeText("context",x,y,width);
+    window.onload=function(){
+      var canvas=document.getElementById("canvas");
+
+        canvas.width=800;
+        canvas.height=800;
+        canvas.style.border="1px solid #eee";
+
+      var context=canvas.getContext("2d");
+
+      context.font="bold 40px Arial";
+      context.fillText("欢迎大家学习《Canvas绘图接口详解》！",30,40);
+
+      context.strokeText("欢迎大家学习《Canvas绘图接口详解》！",30,100);
+
+      context.fillText("欢迎大家学习《Canvas绘图接口详解》！",30,160,400);
+      context.strokeText("欢迎大家学习《Canvas绘图接口详解》！",30,220,400);
+
+      var fontStyle=context.createLinearGradient(0,0,800,800);
+      fontStyle.addColorStop(0,"red");
+      fontStyle.addColorStop(0.5,"yellow");
+      fontStyle.addColorStop(1,"green");
+      context.fillStyle=fontStyle;
+
+      context.fillText("欢迎大家学习《Canvas绘图接口详解》！",30,280);
+
+      var fontStyle2=context.createRadialGradient(400,400,0,400,400,400);
+      fontStyle2.addColorStop(0,"black");
+      fontStyle2.addColorStop(1,"deeppink");
+
+      context.strokeStyle=fontStyle2;
+      context.strokeText("欢迎大家学习《Canvas绘图接口详解》！",30,340);
+
+      var image=new Image();
+      image.src="./test.png";
+      image.onload=function(){
+          var fontStyle3=context.createPattern(this,"repeat");
+          context.fillStyle=fontStyle3;
+          context.fillText("欢迎大家学习《Canvas绘图接口详解》！",30,400);
+          context.strokeText("欢迎大家学习《Canvas绘图接口详解》！",30,400);
+        }
+      }
+      
+  </script>
+</body>
+</html>

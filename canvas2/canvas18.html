@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>fillStyle--pattern(canvas,repeat-style)</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+  //小结：fillStyle=color/image/canvas/video;
+  //其中color可以为：#fffff,#642,rgb(255,128,0),rgba(100,100,100,0.8),hsl(20,62%,28%),hsla(40,82%,33%,0.6),red;
+  //还包括：var grd=context.createLinearGradient(xstart,ystart,xend,yend),
+  //var grd=context.createRadialGradient(x0,y0,r0,x1,y1,r1)
+  //grd.addColorStop(stop,color);
+  //还包括：createPattern(img,repeat-style),createPattern(canvas,repeat-style),createPattern(video,repeat-style),
+  //repeat-style:no-repeat,repeat-x,repeat-y,repeat
+  //最后，其实fillStyle的方法同样适用于strokeStyle上
+    window.onload=function(){
+      var canvas=document.getElementById("canvas");
+
+      canvas.width=800;
+      canvas.height=800;
+      canvas.style.border="1px solid #eee";
+
+      var context=canvas.getContext("2d");
+
+      var backCanvas=createBackgroundCanvas();
+      var pattern=context.createPattern(backCanvas,"repeat");
+      context.fillStyle=pattern;
+      context.fillRect(0,0,800,800);
+    }
+
+    function createBackgroundCanvas(){
+      var backCanvas=document.createElement("canvas");
+
+      backCanvas.width=100;
+      backCanvas.height=100;
+
+      var backCanvasContext=backCanvas.getContext("2d");
+      drawStar(backCanvasContext,50,50,50,0);
+      return backCanvas;
+    }
+
+    function drawStar(cxt,x,y,R,rot){
+      cxt.save();
+      cxt.translate(x,y);
+      cxt.scale(R,R);
+      cxt.rotate(rot/180*Math.PI);
+
+      starPath(cxt);
+
+      cxt.fillStyle="#fb3";
+
+      cxt.fill();
+
+      cxt.restore();
+    }
+
+    function starPath(cxt){
+      cxt.beginPath();
+      for(var i=0;i<5;i++){
+        cxt.lineTo(Math.cos((18+i*72)/180*Math.PI),-Math.sin((18+i*72)/180*Math.PI));
+        cxt.lineTo(Math.cos((54+i*72)/180*Math.PI)*0.5,-Math.sin((54+i*72)/180*Math.PI)*0.5);
+      }
+      cxt.closePath();
+    }
+  </script>
+</body>
+</html>

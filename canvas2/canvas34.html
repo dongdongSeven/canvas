@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>阴影-练习</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload=function(){
+      var canvas=document.getElementById("canvas");
+      canvas.width=800;
+      canvas.height=800;
+      canvas.style.border="1px solid #eee";
+
+      var context=canvas.getContext("2d");
+
+      var linearGradient=context.createLinearGradient(400,400,0,400,400,400);
+      linearGradient.addColorStop(0,"red");
+      linearGradient.addColorStop(0.5,"green");
+      linearGradient.addColorStop(1.0,"gold");
+      context.fillStyle=linearGradient;
+
+      // context.fillRect(0,0,canvas.width,canvas.height);
+
+      context.shadowColor="deeppink";
+      context.shadowOffsetX=10;
+      context.shadowOffsetY=10;
+      context.shadowBlur=10;
+
+      drawStar(context,400,400,350,0);
+    }
+
+    function drawStar(cxt,x,y,R,rot){
+      cxt.save();
+
+      cxt.translate(x,y);
+      cxt.scale(R,R);
+      cxt.rotate(rot/180*Math.PI);
+
+      starPath(cxt);
+
+      // cxt.fillStyle="#fb3";
+
+      cxt.fill();
+
+      cxt.restore();
+    }
+
+    function starPath(cxt){
+      cxt.beginPath();
+      for(var i=0;i<5;i++){
+        cxt.lineTo(Math.cos((18+i*72)/180*Math.PI),-Math.sin((18+i*72)/180*Math.PI));
+        cxt.lineTo(Math.cos((54+i*72)/180*Math.PI)/2,-Math.sin((54+i*72)/180*Math.PI)/2);
+      }
+      cxt.closePath();
+    }
+  </script>
+</body>
+</html>

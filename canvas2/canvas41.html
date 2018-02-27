@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>路径方向和剪纸效果</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas> 
+  <script>
+  // 根据非零环绕原则，来判断区域是否填充
+    window.onload=function(){
+      var canvas=document.getElementById("canvas");
+      canvas.width=800;
+      canvas.height=800;
+
+      var context=canvas.getContext("2d");
+
+      context.beginPath();
+      
+      context.arc(400,400,200,0,Math.PI*2);
+      context.arc(400,400,100,0,Math.PI*2,true);
+
+      context.fillStyle="blue";
+      context.shadowColor="gray";
+      context.shadowOffsetX=10;
+      context.shadowOffsetY=10;
+      context.shadowBlur=10;
+
+      context.fill();
+    }
+  </script>
+</body>
+</html>

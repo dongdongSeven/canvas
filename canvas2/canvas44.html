@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>使用Canvas交互和isPointInPath</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas> 
+  <script>
+  var canvas=document.getElementById("canvas");
+  var context=canvas.getContext("2d");
+  var balls=[];
+
+    window.onload=function(){
+      canvas.width=800;
+      canvas.height=800;
+      canvas.style.border="1px solid #eee";
+
+      for(var i=0;i<10;i++){
+        var aBall={
+          x:Math.random()*canvas.width,
+          y:Math.random()*canvas.height,
+          r:Math.random()*10+50
+        };
+        balls[i]=aBall;
+      }
+
+      draw();
+      canvas.addEventListener("mousemove",detect);      
+    }
+
+    function draw(x,y){
+      context.clearRect(0,0,canvas.width,canvas.height);
+      for(var i=0;i<balls.length;i++){
+        context.beginPath();
+        context.arc(balls[i].x,balls[i].y,balls[i].r,0,Math.PI*2);
+        if(context.isPointInPath(x,y))
+          context.fillStyle="yellow";
+        else
+          context.fillStyle="green";
+        context.fill();
+      }
+    }
+
+    function detect(event){
+      var x=event.clientX-canvas.getBoundingClientRect().left;
+      var y=event.clientY-canvas.getBoundingClientRect().top;
+
+      draw(x,y);
+    }
+  </script>
+</body>
+</html>

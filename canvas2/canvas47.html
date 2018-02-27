@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas标准一直在更新</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas> 
+  <script>
+    window.onload=function(){
+      var canvas=document.getElementById("canvas");
+      var context=canvas.getContext("2d");
+      canvas.width=800;
+      canvas.height=800;
+      canvas.style.border="1px solid #eee";
+      
+      if(context.ellipse){
+        context.beginPath();
+        context.ellipse(400,400,300,200,0,0,Math.PI*2);
+        context.stroke();
+      }else{
+        alert("no ellipse");
+      }
+    }
+  </script>
+</body>
+</html>

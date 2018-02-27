@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>画圆角矩形-1</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload=function(){
+      var canvas=document.getElementById("canvas");
+
+      canvas.width=800;
+      canvas.height=800;
+      canvas.style.border='1px solid #eee';
+
+      var context=canvas.getContext("2d");
+
+      drawRoundRect(context,100,100,600,500,50);
+    };
+
+    function drawRoundRect(cxt,x,y,width,height,raduis){
+      cxt.save();
+      cxt.translate(x,y);
+      pathRoundRect(cxt,width,height,raduis);
+      context.strokeStyle='black';
+      context.lineWidth=5;
+      cxt.stroke();
+      cxt.restore();
+    };
+
+    function pathRoundRect(cxt,width,height,raduis){
+      cxt.beginPath();
+      cxt.arc(width-raduis,height-raduis,raduis,0,Math.PI/2);
+      cxt.lineTo(raduis,height);
+      cxt.arc(raduis,height-raduis,raduis,Math.PI/2,Math.PI);
+      cxt.lineTo(0,raduis);
+      cxt.arc(raduis,raduis,raduis,Math.PI,Math.PI/2*3);
+      cxt.lineTo(width-raduis,0);
+      cxt.arc(width-raduis,raduis,raduis,Math.PI/2*3,Math.PI*2);
+      cxt.closePath();
+    }
+  </script>
+</body>
+</html>

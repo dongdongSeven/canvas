@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas图形库</title>
+</head>
+<body>
+  <canvas id="canvas">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas> 
+  <script>
+  //canvasplus
+  //https://code.google.com/p/canvasplus/
+  //Artisan JS
+  //https://artisan.com/
+  //Rgraph
+  //https://roopons.com.au.wp-content/plugins/viral-options/js/rgraph/
+    window.onload=function(){
+      var canvas=document.getElementById("canvas");
+      var context=canvas.getContext("2d");
+      canvas.width=800;
+      canvas.height=800;
+      canvas.style.border="1px solid #eee";
+      
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+0<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>closePath应用</title>
+</head>
+<body>
+  <canvas id="canvas">
+      当前浏览器不支持Canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    var canvas=document.getElementById("canvas");
+    canvas.width=800;
+    canvas.height=800;
+    var context=canvas.getContext("2d");
+    // 当绘制多边形时，将绘制过程包含在beginPath与closePath中
+    context.beginPath();
+    context.moveTo(100,350);
+    context.lineTo(500,350);
+    context.lineTo(500,200);
+    context.lineTo(700,400);
+    context.lineTo(500,600);
+    context.lineTo(500,450);
+    context.lineTo(100,450);
+    // context.lineTo(100,350);
+    context.closePath();//会自动将最后一个顶点连接至第一个顶点,可省略上面那一行代码
+
+    // 将状态放在一起
+    context.lineWidth=10;
+    context.strokeStyle="#058";
+    context.fillStyle="yellow";
+    // 将绘制动作放一起
+    context.fill();//填充
+    context.stroke();//绘制边框
+
+    
+
+  </script>
+</body>
+</html>

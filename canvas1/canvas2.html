@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>使用canvas做个物理实验</title>
+</head>
+<style>
+</style>
+<body>
+  <canvas id="canvas"></canvas>
+  <script>
+  var ball={x:600,y:100,r:20,g:2,vx:-4,vy:-10};
+  //x,y是坐标;r是半径;g是加速度;vx是水平加速度;vy是垂直加速度
+    window.onload=function(){
+      var canvas=document.getElementById("canvas");
+      canvas.width=1024;
+      canvas.height=768;
+      canvas.style.border="1px solid black";
+
+      var context=canvas.getContext("2d");
+
+      setInterval(function(){
+        render(context);
+        update();
+      },50);
+    }
+
+    function update(){
+      ball.x+=ball.vx;
+      ball.y+=ball.vy;
+      ball.vy+=ball.g;
+
+      if(ball.r+ball.y>=768){
+        ball.vy=-ball.vy*0.5;//0.5是速度损失
+        ball.y=768-ball.r;
+      }
+    }
+
+    function render(cxt){
+      cxt.clearRect(0,0,cxt.canvas.width,cxt.canvas.height);
+
+      cxt.fillStyle="blue";
+      cxt.beginPath();
+      cxt.arc(ball.x,ball.y,ball.r,0,Math.PI*2);
+      cxt.fill();
+    }
+  </script>
+</body>
+</html>

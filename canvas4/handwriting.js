@@ -51,7 +51,7 @@ canvas.addEventListener("touchend",function(e){
 function beginStroke(point){
   isMouseDown = true;
   lastLoc=WindowToCanvas(point.x,point.y);
-  lsatTimestamp = new Date().getTime();
+  lastTimestamp = new Date().getTime();
 }
 function endStroke(){
   isMouseDown = false;
@@ -156,12 +156,19 @@ function drawGrid(){
   context.stroke();
 
   context.beginPath();
+  context.setLineDash([10]);
   context.moveTo(0,0);
   context.lineTo(canvas.width,canvas.height);
 
   context.moveTo(canvas.width,0);
   context.lineTo(0,canvas.height);
 
+  context.lineWidth=1;
+
+  context.stroke();
+
+  context.beginPath();
+  context.setLineDash([]);
   context.moveTo(canvas.width/2,0);
   context.lineTo(canvas.width/2,canvas.height);
 
